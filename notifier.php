@@ -36,12 +36,13 @@ final class NotificationService
     public function notify(string $recipient, string $message): void
     {
         $this->sender->send($recipient, $message);
-        echo "status=sent\n";
     }
 }
 
-$service = new NotificationService(new EmailSender());
-$service->notify('user@example.com', 'Hello!');
-
-$service = new NotificationService(new SmsSender());
-$service->notify('+33612345678', 'Hello!');
+try {
+    $service = new NotificationService(new EmailSender());
+    $service->notify('user@example.com', 'Hello!');
+} catch (\Throwable) {
+    $service = new NotificationService(new SmsSender());
+    $service->notify('+33612345678', 'Hello!');
+}
