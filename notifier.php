@@ -1,11 +1,11 @@
 <?php
 
-interface NotifierSenderInterface
+interface NotifierSender
 {
     public function send(string $recipient, string $message): void;
 }
 
-final class EmailSender implements NotifierSenderInterface
+final class EmailSender implements NotifierSender
 {
     public function send(string $recipient, string $message): void
     {
@@ -17,7 +17,7 @@ final class EmailSender implements NotifierSenderInterface
     }
 }
 
-final class SmsSender implements NotifierSenderInterface
+final class SmsSender implements NotifierSender
 {
     public function send(string $recipient, string $message): void
     {
@@ -31,7 +31,7 @@ final class SmsSender implements NotifierSenderInterface
 
 final class NotificationService
 {
-    public function __construct(private NotifierSenderInterface $sender) {}
+    public function __construct(private NotifierSender $sender) {}
 
     public function notify(string $recipient, string $message): void
     {
